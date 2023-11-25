@@ -1,5 +1,6 @@
 package com.tantawy.data.repositoryimpl
 
+import android.util.Log
 import com.tantawy.data.remote.WeatherApi
 import com.tantawy.domain.model.MultiBaseResponse
 import com.tantawy.domain.model.WeatherList
