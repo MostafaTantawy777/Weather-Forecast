@@ -1,4 +1,4 @@
-package com.tantawy.weatherforecast
+package com.tantawy.weatherforecast.application
 
 import android.app.Application
 import com.tantawy.data.di.apiModule
@@ -15,6 +15,7 @@ class WeatherApplication : Application() {
         super.onCreate()
         appContext = this
         application = this
+
         startKoin {
             androidContext(this@WeatherApplication)
             this.modules(
