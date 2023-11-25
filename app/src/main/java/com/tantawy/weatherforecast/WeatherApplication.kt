@@ -1,6 +1,9 @@
 package com.tantawy.weatherforecast
 
 import android.app.Application
+import com.tantawy.data.di.apiModule
+import com.tantawy.data.di.remoteModule
+import com.tantawy.data.di.repoModule
 import com.tantawy.domain.di.useCasesModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
@@ -16,7 +19,10 @@ class WeatherApplication : Application() {
             androidContext(this@WeatherApplication)
             this.modules(
                 listOf(
-                    useCasesModule
+                    remoteModule,
+                    useCasesModule,
+                    repoModule,
+                    apiModule
                 )
             )
         }
