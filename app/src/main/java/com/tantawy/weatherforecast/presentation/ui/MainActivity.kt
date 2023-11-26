@@ -40,6 +40,7 @@ class MainActivity : BaseActivity() {
                     addresses[0].longitude
                 )
             )
+            binding.tvCity.text=addresses[0].locality
         }
     }
 
