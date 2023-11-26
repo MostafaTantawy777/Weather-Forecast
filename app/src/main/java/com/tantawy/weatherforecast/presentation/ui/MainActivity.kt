@@ -37,11 +37,11 @@ class MainActivity : BaseActivity() {
         weatherLocationManager.getLocation { addresses ->
             weatherViewModel.fetchWeather(
                 WeatherRequest(
-                    addresses!![0].latitude,
-                    addresses[0].longitude
+                    addresses?.get(0)?.latitude ?: 0.0,
+                    addresses?.get(0)?.longitude ?: 0.0
                 )
             )
-            binding.tvCity.text = addresses[0].locality
+            binding.tvCity.text = addresses?.get(0)?.locality ?: ""
         }
     }
 
