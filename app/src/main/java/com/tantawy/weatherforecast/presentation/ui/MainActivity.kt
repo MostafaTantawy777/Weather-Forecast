@@ -2,6 +2,7 @@ package com.tantawy.weatherforecast.presentation.ui
 
 import android.os.Bundle
 import android.os.Build
+import android.util.Log
 import com.tantawy.weatherforecast.base.activity.BaseActivity
 import com.tantawy.weatherforecast.databinding.ActivityMainBinding
 import com.tantawy.weatherforecast.presentation.viewmodel.WeatherViewModel
@@ -34,13 +35,19 @@ class MainActivity : BaseActivity() {
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun fetchWeatherData() {
         weatherLocationManager.getLocation { addresses ->
-            weatherViewModel.fetchWeather(
-                WeatherRequest(
-                    addresses!![0].latitude,
-                    addresses[0].longitude
+            try {
+                weatherViewModel.fetchWeather(
+                    WeatherRequest(
+                        addresses!![0].latitude,
+                        addresses[0].longitude
+                    )
                 )
-            )
-            binding.tvCity.text=addresses[0].locality
+                binding.tvCity.text=addresses[0].locality
+
+            }catch (e:Exception){
+                Log.e("exception",e.message.toString())
+            }
+
         }
     }
 
