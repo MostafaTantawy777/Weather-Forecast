@@ -15,16 +15,24 @@ class WeatherViewModel(
     private val _weather = MutableLiveData<List<WeatherList?>>()
     val weather: LiveData<List<WeatherList?>> = _weather
 
+    private val error = MutableLiveData<String>()
+
+
     fun fetchWeather(weatherRequest: WeatherRequest) {
         viewModelScope.launch(context = Dispatchers.Main) {
-            weatherUseCase.execute(weatherRequest)
-                .catch {
-                    it.printStackTrace()
-                }
-                .onCompletion { }
-                .collect {
-                    _weather.value = it?.body()?.result
-                }
+            try {
+                weatherUseCase.execute(weatherRequest)
+                    .catch {
+                        it.printStackTrace()
+                    }
+                    .onCompletion { }
+                    .collect {
+                        _weather.value = it?.body()?.result
+                    }
+            }catch (e:Exception){
+                error.value=e.message
+            }
+
         }
     }
 

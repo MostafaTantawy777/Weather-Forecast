@@ -35,19 +35,13 @@ class MainActivity : BaseActivity() {
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun fetchWeatherData() {
         weatherLocationManager.getLocation { addresses ->
-            try {
-                weatherViewModel.fetchWeather(
-                    WeatherRequest(
-                        addresses!![0].latitude,
-                        addresses[0].longitude
-                    )
+            weatherViewModel.fetchWeather(
+                WeatherRequest(
+                    addresses!![0].latitude,
+                    addresses[0].longitude
                 )
-                binding.tvCity.text=addresses[0].locality
-
-            }catch (e:Exception){
-                Log.e("exception",e.message.toString())
-            }
-
+            )
+            binding.tvCity.text = addresses[0].locality
         }
     }
 
@@ -55,7 +49,7 @@ class MainActivity : BaseActivity() {
         weatherViewModel.apply {
             weather.observe(this@MainActivity) {
                 it?.let {
-                   var temperatureInKelvin = it[0]?.main?.temp?:0.0
+                    var temperatureInKelvin = it[0]?.main?.temp ?: 0.0
                     setWeatherStatusIcon(it[0]?.weather!![0].main.toString())
                     val convertedTemperature = when (unit) {
                         TemperatureUnit.CELSIUS -> convertKelvinToCelsius(temperatureInKelvin)
@@ -74,7 +68,9 @@ class MainActivity : BaseActivity() {
             WeatherStatus.Cloudy.name -> R.drawable.ic_cloudy
             WeatherStatus.Rainy.name -> R.drawable.ic_rainy
             WeatherStatus.Sunny.name -> R.drawable.ic_sunny
-            else -> {R.drawable.ic_sunny}
+            else -> {
+                R.drawable.ic_sunny
+            }
         }
         binding.weatherIcon.setImageResource(weatherStatusIcon)
     }
