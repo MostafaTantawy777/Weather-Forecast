@@ -2,6 +2,7 @@ package com.tantawy.weatherforecast.presentation.viewmodel
 
 import androidx.lifecycle.*
 import com.tantawy.domain.model.WeatherList
+import com.tantawy.domain.model.request.WeatherRequest
 import com.tantawy.domain.usecases.GetWeatherUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
@@ -14,13 +15,9 @@ class WeatherViewModel(
     private val _weather = MutableLiveData<List<WeatherList?>>()
     val weather: LiveData<List<WeatherList?>> = _weather
 
-    init {
-        fetchWeather()
-    }
-
-    private fun fetchWeather() {
+    fun fetchWeather(weatherRequest: WeatherRequest) {
         viewModelScope.launch(context = Dispatchers.Main) {
-            weatherUseCase.execute()
+            weatherUseCase.execute(weatherRequest)
                 .catch {
                     it.printStackTrace()
                 }
@@ -30,4 +27,29 @@ class WeatherViewModel(
                 }
         }
     }
+
+    fun convertKelvinToCelsius(kelvin: Double): Double {
+        return kelvin - 273.15
+    }
+
+    fun convertCelsiusToFahrenheit(celsius: Double): Double {
+        return celsius * 9 / 5 + 32
+    }
+
+    fun convertKelvinToFahrenheit(kelvin: Double): Double {
+        return convertCelsiusToFahrenheit(convertKelvinToCelsius(kelvin))
+    }
+}
+
+enum class TemperatureUnit(val symbol: String) {
+    CELSIUS("°C"),
+    FAHRENHEIT("°F"),
+    KELVIN("°K")
+}
+
+enum class WeatherStatus {
+    Clear,
+    Cloudy,
+    Rainy,
+    Sunny
 }
