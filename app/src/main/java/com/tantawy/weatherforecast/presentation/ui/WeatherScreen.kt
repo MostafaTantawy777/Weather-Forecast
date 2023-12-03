@@ -33,14 +33,13 @@ import com.tantawy.weatherforecast.presentation.viewmodel.WeatherViewModel
 
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable
-fun weatherScreen(modifier: Modifier, viewModel: WeatherViewModel, city: String) {
+fun weatherScreen(modifier: Modifier, viewModel: WeatherViewModel) {
 
     val dataList by viewModel.weather.collectAsState(emptyList())
     var locationInfo by remember { mutableStateOf("Loading...") }
 
     LaunchedEffect(viewModel.city.value) {
-        // Update the cityName when the city value in the view model changes
-        locationInfo = viewModel.city.value ?: "Loading..."
+        locationInfo = viewModel.city.value
     }
 
     if (dataList.isNotEmpty()) {

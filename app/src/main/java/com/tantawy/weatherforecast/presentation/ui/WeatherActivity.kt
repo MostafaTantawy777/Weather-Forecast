@@ -22,7 +22,6 @@ class WeatherActivity : ComponentActivity() {
 
     private val weatherViewModel: WeatherViewModel by viewModel()
     private val weatherLocationManager = WeatherLocationManager(this@WeatherActivity)
-    private var cityName: String? = null
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,7 +33,7 @@ class WeatherActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    weatherScreen(Modifier, weatherViewModel,cityName.toString())
+                    weatherScreen(Modifier, weatherViewModel)
                 }
             }
         }
@@ -49,8 +48,7 @@ class WeatherActivity : ComponentActivity() {
                     addresses?.get(0)?.longitude ?: 0.0
                 )
             )
-            weatherViewModel.city.value =addresses?.get(0)?.locality ?: ""
-            cityName = "${addresses?.get(0)?.latitude}"
+            weatherViewModel.city.value = addresses?.get(0)?.locality ?: ""
         }
     }
 }
