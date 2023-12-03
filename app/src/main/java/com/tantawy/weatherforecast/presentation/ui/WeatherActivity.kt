@@ -2,7 +2,6 @@ package com.tantawy.weatherforecast.presentation.ui
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
@@ -52,7 +51,6 @@ class WeatherActivity : ComponentActivity() {
             )
             weatherViewModel.city.value =addresses?.get(0)?.locality ?: ""
             cityName = "${addresses?.get(0)?.latitude}"
-            Log.e("fgfgg",cityName.toString())
         }
     }
 }

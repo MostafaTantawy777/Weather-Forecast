@@ -12,13 +12,10 @@ class WeatherViewModel(
     private val weatherUseCase: GetWeatherUseCase
 ) : ViewModel() {
 
-    private val _weather = MutableLiveData<List<WeatherList?>>()
-    val weather: LiveData<List<WeatherList?>> = _weather
+    private val _weather = MutableStateFlow<List<WeatherList?>>(emptyList())
+    val weather: StateFlow<List<WeatherList?>> = _weather
 
     private val error = MutableLiveData<String>()
-
-    private val _weather2 = MutableStateFlow<List<WeatherList?>>(emptyList())
-    val weather2: StateFlow<List<WeatherList?>> = _weather2
 
      val city = MutableStateFlow<String>("")
 
@@ -31,7 +28,7 @@ class WeatherViewModel(
                     }
                     .onCompletion { }
                     .collect {
-                        _weather2.value = it?.body()?.result!!
+                        _weather.value = it?.body()?.result!!
                     }
             }catch (e:Exception){
                 error.value=e.message
@@ -61,7 +58,7 @@ enum class TemperatureUnit(val symbol: String) {
 
 enum class WeatherStatus {
     Clear,
-    Cloudy,
+    Clouds,
     Rain,
     Sunny
 }

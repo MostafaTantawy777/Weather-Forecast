@@ -31,7 +31,7 @@ import com.tantawy.weatherforecast.presentation.viewmodel.WeatherViewModel
 @Composable
 fun weatherScreen(modifier: Modifier, viewModel: WeatherViewModel, city: String) {
 
-    val dataList by viewModel.weather2.collectAsState(emptyList())
+    val dataList by viewModel.weather.collectAsState(emptyList())
     var locationInfo by remember { mutableStateOf("Loading...") }
 
     LaunchedEffect(viewModel.city.value) {
@@ -77,7 +77,7 @@ fun weatherScreen(modifier: Modifier, viewModel: WeatherViewModel, city: String)
 
             val weatherStatusIcon = when (dataList[0]?.weather!![0].main.toString()) {
                 WeatherStatus.Clear.name -> R.drawable.ic_cloudy
-                WeatherStatus.Cloudy.name -> R.drawable.ic_cloudy
+                WeatherStatus.Clouds.name -> R.drawable.ic_cloudy
                 WeatherStatus.Rain.name -> R.drawable.ic_rainy
                 WeatherStatus.Sunny.name -> R.drawable.ic_sunny
                 else -> {
